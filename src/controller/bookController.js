@@ -2,7 +2,6 @@ const catchAsync = require("../exception/catchAsync");
 const Book = require("../model/Book");
 
 exports.list = catchAsync(async (req, res) => {
-  let { user } = req;
   let { page, limit, q } = req.query;
   let options = {
     ...(q && {
@@ -32,6 +31,7 @@ exports.list = catchAsync(async (req, res) => {
     sort: { _id: -1 },
     lean: { virtuals: true },
   });
+
   res.status(200).json({
     status: "success",
     message: "Fetched successfully.",
@@ -51,7 +51,6 @@ exports.show = catchAsync(async (req, res) => {
 });
 
 exports.store = catchAsync(async (req, res) => {
-  let { user } = req;
   let { name, author, edition, language, slug } = req.body;
 
   await Book.create({
@@ -68,7 +67,6 @@ exports.store = catchAsync(async (req, res) => {
 });
 
 exports.update = catchAsync(async (req, res) => {
-  let { user } = req;
   let { id } = req.params;
   let { name, author, edition, language, slug } = req.body;
 

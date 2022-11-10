@@ -2,7 +2,7 @@ const Validator = require("Validator");
 const { first } = require("underscore");
 const AppError = require("../exception/AppError");
 
-function validateMongoId(name, value, params) {
+function validateMongoId(name, value) {
   let hexadecimal = /^[0-9A-F]+$/i;
   return value && hexadecimal.test(value) && value.length === 24;
 }

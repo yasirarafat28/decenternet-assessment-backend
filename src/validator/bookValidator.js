@@ -5,7 +5,6 @@ const slugGenerator = require("../utils/slugGenerator");
 const simpleValidator = require("./simpleValidator");
 
 exports.storeValidator = catchAsync(async (req, res, next) => {
-  let { user } = req;
   let rules = {
     name: "required",
     author: "required",
@@ -13,7 +12,7 @@ exports.storeValidator = catchAsync(async (req, res, next) => {
     edition: "required",
   };
   simpleValidator(req.body, rules);
-  let { name, author, edition, language } = req.body;
+  let { name, edition } = req.body;
   let slug = slugGenerator(name + " " + edition);
   let checkExists = await Book.findOne({ slug, edition });
   if (checkExists) {
@@ -24,7 +23,6 @@ exports.storeValidator = catchAsync(async (req, res, next) => {
 });
 
 exports.updateValidator = catchAsync(async (req, res, next) => {
-  let { user } = req;
   simpleValidator(req.params, { id: "required|mongoid" });
   let rules = {
     name: "required",
@@ -34,7 +32,7 @@ exports.updateValidator = catchAsync(async (req, res, next) => {
   };
   simpleValidator(req.body, rules);
   let { id } = req.params;
-  let { name, author, edition, language } = req.body;
+  let { name, edition } = req.body;
   let slug = slugGenerator(name + " " + edition);
   let book = await Book.findOne({ _id: id });
   if (!book) {
@@ -49,7 +47,6 @@ exports.updateValidator = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteValidator = catchAsync(async (req, res, next) => {
-  let { user } = req;
   let rules = {
     id: "required|mongoid",
   };
