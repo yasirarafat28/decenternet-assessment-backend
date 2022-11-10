@@ -13,7 +13,7 @@ module.exports = catchAsync(async (req, res, next) => {
   }
 
   if (!token) {
-    throw new AppError("Bearer token is required", 422);
+    throw new AppError("Bearer token is required", 401);
   }
   try {
     let webToken = await WebToken.findOne({ token }).populate(["user"]);
