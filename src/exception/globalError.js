@@ -1,5 +1,5 @@
 const process = require("process");
-const globalError = (err, req, res) => {
+const globalError = (err, req, res, next) => {
   let environment = process?.env?.NODE_ENV;
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "unknown_error";

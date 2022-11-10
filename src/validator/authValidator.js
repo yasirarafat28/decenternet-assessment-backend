@@ -6,11 +6,11 @@ const simpleValidator = require("./simpleValidator");
 exports.loginValidation = catchAsync(async (req, res, next) => {
   let { email, password } = req.body;
   let rules = {
-    email: "required",
+    email: "required|email",
     password: "required",
   };
 
-  simpleValidator(req.body, rules);
+  await simpleValidator(req.body, rules);
 
   let user = await User.findOne({ email });
   if (!user) {
